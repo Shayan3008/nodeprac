@@ -26,7 +26,11 @@ app.get("/api/member", (req, res) => {
 
 //single member id
 app.get("/api/member/:id", (req, res) => {
+    var found=member.some(member=>member.id==parseInt(req.params.id))
+    if(found)
     res.json(member.filter(member => member.id == parseInt(req.params.id)))
+    else
+    res.status(400).json("No such Id")
 })
 
 app.get("/", (req, res) => {
