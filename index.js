@@ -26,7 +26,7 @@ app.get("/api/member", (req, res) => {
 
 //single member id
 app.get("/api/member/:id", (req, res) => {
-    res.json(member.filter(member=>member.id==parseInt(req.params.id)))
+    res.json(member.filter(member => member.id == parseInt(req.params.id)))
 })
 
 app.get("/", (req, res) => {
