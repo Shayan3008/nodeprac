@@ -8,8 +8,10 @@ const logger = require("./middleware/logger.js")
 const router = express.Router()
 var dataset;
 
-app.use(logger)
 
+app.use(cors())
+app.use(logger)
+app.use(express.json())
 const member = [
     {
         "id": 1,
@@ -18,7 +20,7 @@ const member = [
     }
 ]
 
-app.use(cors())
+
 
 //api creation
 app.get("/api/member", (req, res) => {
@@ -44,8 +46,16 @@ app.get("/", (req, res) => {
 })
 
 //sending post request
-router.post("/",(req,res)=>{
+app.post("/", (req, res) => {
     console.log(req.body)
+    res.status(200)
+    var data={
+        name:req.body.name,
+        email:req.body.email,
+        status:"active"
+    }
+    member.push(data)
+    res.json(member)
 })
 
 //static folder
