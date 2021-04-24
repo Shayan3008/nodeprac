@@ -5,6 +5,7 @@ const path = require("path")
 const PORT = process.env.PORT || 5000
 const cors = require("cors")
 const logger = require("./middleware/logger.js")
+const router = express.Router()
 var dataset;
 
 app.use(logger)
@@ -26,11 +27,11 @@ app.get("/api/member", (req, res) => {
 
 //single member id
 app.get("/api/member/:id", (req, res) => {
-    var found=member.some(member=>member.id==parseInt(req.params.id))
-    if(found)
-    res.json(member.filter(member => member.id == parseInt(req.params.id)))
+    var found = member.some(member => member.id == parseInt(req.params.id))
+    if (found)
+        res.json(member.filter(member => member.id == parseInt(req.params.id)))
     else
-    res.status(400).json("No such Id")
+        res.status(400).json("No such Id")
 })
 
 app.get("/", (req, res) => {
@@ -41,6 +42,12 @@ app.get("/", (req, res) => {
         dataset = data.toString()
     })
 })
+
+//sending post request
+router.post("/",(req,res)=>{
+    console.log(req.body)
+})
+
 //static folder
 app.use(express.static(path.join(__dirname, "public")))
 app.listen(PORT, () => console.log("Server started at" + PORT))
