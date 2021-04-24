@@ -15,7 +15,7 @@ app.use(express.json())
 const member = [
     {
         "id": 1,
-        "name": "shayan",
+        "name": "shaya",
         "status": "active"
     }
 ]
@@ -47,15 +47,45 @@ app.get("/", (req, res) => {
 
 //sending post request
 app.post("/", (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     res.status(200)
-    var data={
-        name:req.body.name,
-        email:req.body.email,
-        status:"active"
+    var data = {
+        name: req.body.name,
+        email: req.body.email,
+        status: "active"
     }
     member.push(data)
     res.json(member)
+})
+//sending put request
+app.put("/:name", (req, res) => {
+    var found = member.some(member => member.name == req.params.name)
+    if (found) {
+        member.forEach(member => {
+            if (member.name == req.params.name) {
+                member.name = req.body.name
+            }
+        })
+        res.json(member)
+    }
+
+    else
+        res.status(400).json("No such Id")
+})
+
+//delete req
+app.delete("/:name", (req, res) => {
+    var found = member.some(member => member.name == req.params.name)
+    if (found) {
+        
+        res.json({
+            msg:"Deleted",
+            member:member.filter(mem=>mem.name!=req.params.name)
+        })
+    }
+
+    else
+        res.status(400).json("No such Id")
 })
 
 //static folder
